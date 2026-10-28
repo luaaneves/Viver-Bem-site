@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "suplementos",
+    "nome": "Suplementos",
+    "ordem": 0,
+    "ativa": true
+  },
+  {
+    "slug": "chas",
+    "nome": "Chás",
+    "ordem": 1,
+    "ativa": true
+  },
+  {
+    "slug": "granel",
+    "nome": "Granel",
+    "ordem": 2,
+    "ativa": true
+  },
+  {
+    "slug": "cosmeticos",
+    "nome": "Cosméticos",
+    "ordem": 3,
+    "ativa": true
+  }
+]

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carrinho – Viver Bem</title>
+  <meta name="description" content="Seu carrinho de compras na Viver Bem.">
+
+  <link rel="icon" href="assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B6B2C">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="carrinho">
+
+  <header class="site-header">
+    <div class="container container-largo header-inner">
+      <a href="index.html" class="logo-link" aria-label="Viver Bem – página inicial">
+        <img src="assets/logo-amarelo.png" alt="Viver Bem" class="logo">
+      </a>
+
+      <div class="header-acoes">
+        <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho vazio">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 4h2.5l2.2 10.5a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9.5" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/>
+          </svg>
+          <span class="carrinho-qtd" hidden>0</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav id="menu-principal" class="menu" aria-label="Menu principal">
+        <a href="index.html">Início</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="index.html#quem-somos">Quem somos</a>
+        <a href="index.html#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="topo-pagina">
+      <div class="container">
+        <h1>Seu carrinho</h1>
+      </div>
+    </section>
+
+    <section class="secao-grade">
+      <div class="container carrinho">
+        <p id="aviso-erro" class="aviso-erro" hidden></p>
+
+        <div id="carrinho-vazio" class="vazio" hidden>
+          <p>Seu carrinho está vazio.</p>
+          <a href="produtos.html" class="btn btn-verde">Ver produtos</a>
+        </div>
+
+        <div id="carrinho-conteudo" hidden>
+          <ul class="carrinho-lista" id="carrinho-lista"></ul>
+
+          <div class="carrinho-resumo">
+            <p class="carrinho-total">Total: <strong id="carrinho-total"></strong></p>
+            <label class="campo-nome" for="pedido-nome">Seu nome (opcional)
+              <input type="text" id="pedido-nome" maxlength="80" autocomplete="name">
+            </label>
+            <a href="#" class="btn btn-verde" id="botao-whatsapp">Finalizar pelo WhatsApp</a>
+            <p class="nota" id="pedido-status" role="status" hidden></p>
+            <p class="nota">Ao clicar, o WhatsApp abre com o seu pedido pronto. É só enviar e combinar entrega ou retirada.</p>
+            <button type="button" class="link-botao" id="botao-limpar">Esvaziar carrinho</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container container-largo footer-inner">
+      <img src="assets/logo-amarelo.png" alt="Viver Bem" class="logo logo-rodape">
+      <p>© <span id="ano">2026</span> Viver Bem – Produtos Naturais</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/carrinho.js"></script>
+  <script src="js/loja.js"></script>
+</body>
+</html>

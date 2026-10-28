@@ -1,0 +1,74 @@
+/* Painel da loja (admin.html) */
+.admin-main { padding-top: var(--e4); padding-bottom: var(--e10); display: grid; gap: var(--e3); }
+.admin-topo { display: flex; align-items: center; gap: var(--e2); color: var(--branco); }
+.admin-usuario { font-size: 14px; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-caixa { background: var(--branco); border-radius: 16px; padding: var(--e3); max-width: 720px; }
+.admin-barra { display: flex; flex-wrap: wrap; gap: var(--e2); align-items: center; }
+code { background: var(--areia); padding: 2px 6px; border-radius: 6px; }
+
+.btn-mini {
+  display: inline-block; min-height: 40px; padding: 0 var(--e2);
+  border: 2px solid var(--verde-escuro); border-radius: 999px;
+  background: none; color: var(--verde-escuro);
+  font: inherit; font-weight: 700; font-size: 14px; line-height: 36px; cursor: pointer;
+}
+.site-header .btn-mini { border-color: var(--branco); color: var(--branco); }
+.btn-mini.perigo { border-color: #a32020; color: #a32020; }
+.btn-mini:disabled { opacity: .5; cursor: not-allowed; }
+
+.form { display: grid; gap: var(--e2); }
+.form label { display: grid; gap: 6px; font-weight: 500; }
+.form input[type="text"], .form input[type="email"], .form input[type="password"],
+.form input[type="number"], .form select, .form textarea {
+  width: 100%; min-height: 48px; padding: 10px 14px;
+  border: 2px solid var(--areia); border-radius: 12px;
+  font: inherit; color: var(--texto); background: var(--creme);
+}
+.form textarea { resize: vertical; }
+.form input:focus, .form select:focus, .form textarea:focus { outline: 3px solid var(--verde-claro); border-color: var(--verde-escuro); }
+.form-grupo { display: grid; gap: var(--e2); padding: var(--e2); border-radius: 12px; background: var(--creme); }
+.form .check { display: flex; align-items: center; gap: var(--e1); }
+.form .check input { width: 22px; height: 22px; }
+.dica { font-weight: 400; color: var(--texto-suave); font-size: 14px; }
+
+.fotos { border: 2px dashed var(--areia); border-radius: 12px; padding: var(--e2); display: grid; gap: var(--e2); }
+.fotos-lista { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--e2); }
+.fotos-lista li { display: grid; gap: 6px; }
+.fotos-lista img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; background: var(--areia); }
+.fotos-lista .acoes { display: flex; gap: 4px; flex-wrap: wrap; }
+.fotos-lista .acoes button { min-height: 32px; padding: 0 10px; font-size: 13px; line-height: 28px; }
+.btn-arquivo { justify-self: start; cursor: pointer; }
+
+.tabela-rolagem { overflow-x: auto; background: var(--branco); border-radius: 16px; }
+.tabela { width: 100%; border-collapse: collapse; min-width: 640px; }
+.tabela th, .tabela td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--areia); vertical-align: middle; }
+.tabela th { font-size: 13px; color: var(--texto-suave); text-transform: uppercase; letter-spacing: .04em; }
+.tabela td.acoes { white-space: nowrap; display: flex; gap: 6px; }
+.tabela input[type="checkbox"] { width: 22px; height: 22px; }
+.tabela .sem-foto { color: var(--texto-suave); font-size: 14px; }
+
+.abas { display: flex; gap: var(--e1); border-bottom: 2px solid var(--areia); }
+.aba {
+  min-height: 44px; padding: 0 var(--e3); border: 0; background: none;
+  font: inherit; font-weight: 700; color: var(--texto-suave); cursor: pointer;
+  border-bottom: 4px solid transparent; margin-bottom: -2px;
+}
+.aba.ativa { color: var(--verde-escuro); border-bottom-color: var(--verde-escuro); }
+
+.aba-contador {
+  display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 4px;
+  border-radius: 999px; background: #c0392b; color: var(--branco);
+  font-size: 12px; line-height: 20px; text-align: center;
+}
+.aba-contador[hidden] { display: none; }
+.filtro-pedidos { display: flex; align-items: center; gap: var(--e1); font-weight: 500; }
+.filtro-pedidos select { min-height: 40px; padding: 0 12px; border: 2px solid var(--areia); border-radius: 12px; font: inherit; background: var(--branco); }
+.estado { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+.estado-novo { background: #fff3c4; color: #7a5b00; }
+.estado-combinado { background: #d9ecff; color: #0b4a85; }
+.estado-entregue { background: #d8f0d2; color: #1f6b2c; }
+.estado-cancelado { background: #eee; color: #666; }
+.pedido-itens { list-style: none; padding: 0; margin: var(--e2) 0; display: grid; gap: 8px; }
+.pedido-itens li { display: flex; justify-content: space-between; gap: var(--e2); padding: 10px 0; border-bottom: 1px solid var(--areia); }
+.pedido-total { font-size: 18px; margin-bottom: var(--e2); }
+#tabela-pedidos td.num { font-weight: 700; }

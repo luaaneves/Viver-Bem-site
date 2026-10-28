@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viver Bem – Produtos Naturais</title>
+  <meta name="description" content="Chás, suplementos, produtos a granel e cosméticos naturais. Escolha na Viver Bem e compre com segurança.">
+
+  <link rel="icon" href="assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B6B2C">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-pagina="home">
+
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+    <div class="container container-largo header-inner">
+      <a href="index.html" class="logo-link" aria-label="Viver Bem – página inicial">
+        <img src="assets/logo-amarelo.png" alt="Viver Bem" class="logo">
+      </a>
+
+      <div class="header-acoes">
+        <a href="carrinho.html" class="carrinho-link" aria-label="Carrinho vazio">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 4h2.5l2.2 10.5a1 1 0 0 0 1 .8h8.6a1 1 0 0 0 1-.8L20 8H6.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9.5" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/>
+          </svg>
+          <span class="carrinho-qtd" hidden>0</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      </div>
+
+      <nav id="menu-principal" class="menu" aria-label="Menu principal">
+        <a href="index.html" aria-current="page">Início</a>
+        <a href="produtos.html">Produtos</a>
+        <a href="#quem-somos">Quem somos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-texto">
+          <p class="eyebrow">Produtos naturais</p>
+          <h1>Cuidar de você começa pelo que você escolhe.</h1>
+          <p class="lead">Chás, suplementos, produtos a granel e cosméticos naturais, com ingredientes que você entende.</p>
+          <a href="produtos.html" class="btn btn-amarelo">Ver produtos</a>
+        </div>
+        <div class="ph ph-hero" role="img" aria-label="Foto principal">[FOTO PRINCIPAL: balcão ou produtos em destaque]</div>
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section class="secao">
+      <div class="container">
+        <h2>Compre por categoria</h2>
+        <div class="grid grid-categorias" id="lista-categorias">
+          <!-- Os cartões das categorias entram aqui sozinhos (Supabase ou data/categorias.json) -->
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTAQUES -->
+    <section class="secao secao-branca">
+      <div class="container">
+        <h2>Destaques</h2>
+        <div class="carrossel">
+          <button type="button" class="carrossel-seta anterior" id="destaques-anterior" aria-label="Ver produtos anteriores" disabled>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4l-6 6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="carrossel-trilho" id="lista-destaques" role="region" aria-label="Produtos em destaque">
+            <!-- Os cards entram aqui sozinhos (produtos marcados como destaque) -->
+          </div>
+          <button type="button" class="carrossel-seta proximo" id="destaques-proximo" aria-label="Ver mais produtos">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <p id="aviso-erro" class="aviso-erro" hidden></p>
+      </div>
+    </section>
+
+    <!-- COMO COMPRAR -->
+    <section class="secao">
+      <div class="container">
+        <h2>Como comprar</h2>
+        <div class="grid grid-passos">
+          <div class="passo">
+            <h3>1. Escolha</h3>
+            <p>Navegue pelas categorias e veja os produtos.</p>
+          </div>
+          <div class="passo">
+            <h3>2. Peça pelo WhatsApp</h3>
+            <p>Monte seu carrinho e clique em finalizar. O pedido chega pronto no nosso WhatsApp.</p>
+          </div>
+          <div class="passo">
+            <h3>3. Receba</h3>
+            <p>[Retirada na loja ou entrega: combinamos tudo pelo WhatsApp]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUEM SOMOS -->
+    <section class="secao secao-areia" id="quem-somos">
+      <div class="container duas-colunas">
+        <div class="ph ph-sobre" role="img" aria-label="Foto da loja">[FOTO: a loja ou quem atende]</div>
+        <div>
+          <h2>Quem somos</h2>
+          <p class="lead">[Conte em 2 ou 3 frases a história da Viver Bem e o que você valoriza na hora de escolher cada produto.]</p>
+          <a href="#quem-somos" class="btn btn-verde">Nossa história</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section class="secao" id="contato">
+      <div class="container duas-colunas">
+        <div>
+          <h2>Contato</h2>
+          <ul class="lista-contato">
+            <li>WhatsApp: (77) 98128-6097</li>
+            <li>Instagram: [@SEU_PERFIL]</li>
+            <li>Endereço: [RUA, NÚMERO, CIDADE]</li>
+            <li>Horário: [DIAS E HORÁRIOS]</li>
+          </ul>
+          <a href="https://wa.me/5577981286097?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Viver%20Bem" class="btn btn-verde" target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+        <div class="ph ph-mapa" role="img" aria-label="Mapa com a localização da loja">[MAPA com a localização da loja]</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="container container-largo footer-inner">
+      <img src="assets/logo-amarelo.png" alt="Viver Bem" class="logo logo-rodape">
+      <p>© <span id="ano">2026</span> Viver Bem – Produtos Naturais</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/carrinho.js"></script>
+  <script src="js/loja.js"></script>
+</body>
+</html>

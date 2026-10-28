@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Painel – Viver Bem</title>
+  <link rel="icon" href="assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+
+  <header class="site-header">
+    <div class="container container-largo header-inner">
+      <a href="index.html" class="logo-link" aria-label="Voltar ao site">
+        <img src="assets/logo-amarelo.png" alt="Viver Bem" class="logo">
+      </a>
+      <div class="admin-topo">
+        <span id="admin-usuario" class="admin-usuario" hidden></span>
+        <button type="button" class="btn-mini" id="botao-sair" hidden>Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-main">
+    <h1>Painel da loja</h1>
+    <p id="admin-aviso" class="aviso-erro" role="status" hidden></p>
+
+    <!-- Supabase ainda não configurado -->
+    <section id="admin-sem-config" class="admin-caixa" hidden>
+      <h2>Falta ligar o banco de dados</h2>
+      <p>Preencha o <code>js/config.js</code> com o endereço e a chave do Supabase. O passo a passo está no arquivo <code>GUIA-SUPABASE.md</code>.</p>
+    </section>
+
+    <!-- Login -->
+    <section id="admin-login" class="admin-caixa" hidden>
+      <h2>Entrar</h2>
+      <form id="form-login" class="form">
+        <label>E-mail
+          <input type="email" id="login-email" autocomplete="username" required>
+        </label>
+        <label>Senha
+          <input type="password" id="login-senha" autocomplete="current-password" required>
+        </label>
+        <button type="submit" class="btn btn-verde">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Abas -->
+    <nav id="admin-abas" class="abas" aria-label="Seções do painel" hidden>
+      <button type="button" class="aba ativa" id="aba-produtos">Produtos</button>
+      <button type="button" class="aba" id="aba-categorias">Categorias</button>
+      <button type="button" class="aba" id="aba-pedidos">Pedidos <span class="aba-contador" id="pedidos-novos" hidden>0</span></button>
+    </nav>
+
+    <!-- Lista de pedidos -->
+    <section id="admin-pedidos" hidden>
+      <div class="admin-barra">
+        <label class="filtro-pedidos">Mostrar
+          <select id="filtro-status">
+            <option value="">Todos os pedidos</option>
+            <option value="novo">Novos</option>
+            <option value="combinado">Combinados</option>
+            <option value="entregue">Entregues</option>
+            <option value="cancelado">Cancelados</option>
+          </select>
+        </label>
+        <button type="button" class="btn-mini" id="botao-atualizar-pedidos">Atualizar</button>
+      </div>
+      <p class="nota">O número do pedido aparece na mensagem que o cliente manda no WhatsApp. Use ele para achar a conversa certa.</p>
+      <div class="tabela-rolagem">
+        <table class="tabela" id="tabela-pedidos">
+          <thead><tr><th>Nº</th><th>Data</th><th>Nome</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p id="pedidos-vazio" class="vazio" hidden>Nenhum pedido por aqui ainda.</p>
+    </section>
+
+    <!-- Detalhes de um pedido -->
+    <section id="admin-pedido" class="admin-caixa" hidden>
+      <h2 id="pedido-titulo">Pedido</h2>
+      <p class="nota" id="pedido-data"></p>
+      <p><strong>Nome informado:</strong> <span id="pedido-nome-cliente"></span></p>
+      <ul class="pedido-itens" id="pedido-itens"></ul>
+      <p class="pedido-total">Total: <strong id="pedido-total"></strong></p>
+      <div class="form">
+        <label>Estado do pedido
+          <select id="pedido-status-select">
+            <option value="novo">Novo</option>
+            <option value="combinado">Combinado</option>
+            <option value="entregue">Entregue</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </label>
+        <label>Anotações da equipe (só vocês veem)
+          <textarea id="pedido-observacao" rows="3" maxlength="1000"></textarea>
+        </label>
+        <div class="admin-barra">
+          <button type="button" class="btn btn-verde" id="botao-salvar-pedido">Salvar</button>
+          <button type="button" class="btn-mini" id="botao-voltar-pedidos">Voltar</button>
+          <button type="button" class="btn-mini perigo" id="botao-apagar-pedido">Apagar pedido</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de categorias -->
+    <section id="admin-categorias" hidden>
+      <div class="admin-barra">
+        <button type="button" class="btn btn-verde" id="botao-nova-categoria">+ Nova categoria</button>
+      </div>
+      <p class="nota">Desmarque "Ativa" para esconder uma categoria (e os produtos dela) do site, sem apagar nada.</p>
+      <div class="tabela-rolagem">
+        <table class="tabela" id="tabela-categorias">
+          <thead><tr><th>Categoria</th><th>Ordem</th><th>Ativa</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Formulário de categoria -->
+    <section id="admin-form-categoria" class="admin-caixa" hidden>
+      <h2 id="form-categoria-titulo">Nova categoria</h2>
+      <form id="form-categoria" class="form">
+        <label>Nome
+          <input type="text" id="c-nome" required maxlength="60">
+        </label>
+        <label>Ordem na lista (menor aparece primeiro)
+          <input type="number" id="c-ordem" step="1" value="0">
+        </label>
+        <label class="check"><input type="checkbox" id="c-ativa" checked> Ativa (aparece no site)</label>
+        <div class="admin-barra">
+          <button type="submit" class="btn btn-verde" id="botao-salvar-categoria">Salvar</button>
+          <button type="button" class="btn-mini" id="botao-cancelar-categoria">Cancelar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Lista de produtos -->
+    <section id="admin-lista" hidden>
+      <div class="admin-barra">
+        <button type="button" class="btn btn-verde" id="botao-novo">+ Novo produto</button>
+        <button type="button" class="btn-mini" id="botao-importar" hidden>Importar os produtos de exemplo (data/produtos.json)</button>
+      </div>
+      <p class="nota">Dica: use "Disponível" para esconder um produto que acabou, sem apagar.</p>
+      <div class="tabela-rolagem">
+        <table class="tabela" id="tabela-produtos">
+          <thead>
+            <tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Disponível</th><th>Destaque</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Formulário -->
+    <section id="admin-form" class="admin-caixa" hidden>
+      <h2 id="form-titulo">Novo produto</h2>
+      <form id="form-produto" class="form">
+        <label>Nome
+          <input type="text" id="f-nome" required maxlength="120">
+        </label>
+
+        <label>Categoria
+          <select id="f-categoria" required></select>
+        </label>
+
+        <label>Como é vendido
+          <select id="f-unidade">
+            <option value="un">Por unidade (1, 2, 3...)</option>
+            <option value="g">Por peso, em gramas (granel)</option>
+          </select>
+        </label>
+
+        <label>Preço (R$) <span class="dica" id="dica-preco"></span>
+          <input type="number" id="f-preco" step="0.01" min="0" inputmode="decimal">
+        </label>
+
+        <div id="campos-peso" class="form-grupo" hidden>
+          <label>O preço vale para quantos gramas?
+            <input type="number" id="f-preco-por" min="1" step="1" value="100">
+          </label>
+          <label>Cliente escolhe de quantos em quantos gramas?
+            <input type="number" id="f-passo" min="1" step="1" value="50">
+          </label>
+          <label>Quantidade mínima (g)
+            <input type="number" id="f-minimo" min="1" step="1" value="50">
+          </label>
+        </div>
+
+        <label>Condições de pagamento (opcional)
+          <input type="text" id="f-condicoes" maxlength="200">
+        </label>
+
+        <label>Descrição curta
+          <textarea id="f-descricao" rows="3"></textarea>
+        </label>
+
+        <label>Benefícios (um por linha)
+          <textarea id="f-beneficios" rows="4"></textarea>
+        </label>
+
+        <label>Descrição completa
+          <textarea id="f-descricao-completa" rows="6"></textarea>
+        </label>
+
+        <fieldset class="fotos">
+          <legend>Fotos</legend>
+          <p class="nota">A primeira foto é a principal. As fotos são reduzidas automaticamente para o site ficar leve.</p>
+          <ul id="fotos-lista" class="fotos-lista"></ul>
+          <label class="btn-mini btn-arquivo">Adicionar fotos
+            <input type="file" id="f-fotos" accept="image/*" multiple hidden>
+          </label>
+        </fieldset>
+
+        <label class="check"><input type="checkbox" id="f-disponivel" checked> Disponível para compra</label>
+        <label class="check"><input type="checkbox" id="f-destaque"> Mostrar em destaque na Home</label>
+
+        <label>Ordem na lista (menor aparece primeiro)
+          <input type="number" id="f-ordem" step="1" value="0">
+        </label>
+
+        <div class="admin-barra">
+          <button type="submit" class="btn btn-verde" id="botao-salvar">Salvar</button>
+          <button type="button" class="btn-mini" id="botao-cancelar">Cancelar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/carrinho.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
