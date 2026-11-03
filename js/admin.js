@@ -636,16 +636,9 @@ function voltarParaLista() {
 }
 document.querySelectorAll("[data-voltar-lista]").forEach((b) => b.addEventListener("click", voltarParaLista));
 
-// Clicar na logo dentro do painel volta para a lista (e não para o site). O site abre em "Ver o site".
-document.querySelector(".logo-link").addEventListener("click", (evento) => {
-  if (!banco || usuarioAtual === null) return;
-  evento.preventDefault();
-  voltarParaLista();
-});
-
 /* ---------- Navegação ---------- */
 
-// Clicar no logo ou no título "Painel da loja" volta para o início do painel (lista de produtos)
+// Clicar na logo ou em "Painel da loja" volta para o painel central (lista de produtos)
 function irParaInicio(evento) {
   evento.preventDefault();
   if (!banco || $("#admin-login").hidden === false || !usuarioAtual) return;
@@ -656,10 +649,5 @@ function irParaInicio(evento) {
 }
 $("#titulo-painel").addEventListener("click", irParaInicio);
 $("#logo-painel").addEventListener("click", irParaInicio);
-
-// Botões "Voltar" no topo dos formulários fazem o mesmo que o botão Cancelar/Voltar lá de baixo
-document.querySelectorAll("[data-voltar-para]").forEach((botao) => {
-  botao.addEventListener("click", () => $(botao.dataset.voltarPara).click());
-});
 
 iniciar().catch((erro) => aviso("Erro ao iniciar o painel: " + (erro.message || erro)));
