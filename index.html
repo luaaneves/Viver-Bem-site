@@ -58,7 +58,12 @@
           <p class="eyebrow">Produtos naturais</p>
           <h1>Cuidar de você começa pelo que você escolhe.</h1>
           <p class="lead">Chás, suplementos, produtos a granel e cosméticos naturais, com ingredientes que você entende.</p>
-          <a href="produtos.html" class="btn btn-amarelo">Ver produtos</a>
+          <form class="busca" role="search" action="produtos.html" method="get">
+          <label class="busca-rotulo" for="busca-home">Buscar produto</label>
+          <input type="search" id="busca-home" name="busca" class="busca-campo" placeholder="Buscar produto" autocomplete="off" maxlength="60">
+          <button type="submit" class="busca-botao" aria-label="Buscar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2.4"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+        </form>
+          <a href="produtos.html" class="btn btn-amarelo">Ver todos os produtos</a>
         </div>
         <img src="assets/loja-entrada.jpg" alt="Fachada da loja Viver Bem, na Rua Teixeira de Freitas, 173" class="foto-hero" width="900" height="1142">
       </div>

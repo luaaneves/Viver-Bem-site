@@ -137,7 +137,15 @@ function paginaCatalogo(produtos, categorias) {
   produtos.forEach((p) => lista.append(criarCard(p)));
   const cartoes = lista.querySelectorAll(".card-produto");
 
+  // Texto de busca de cada produto (sem acento e em minúsculas): nome, descrição, benefícios e categoria
+  const semAcento = (t) => String(t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const textos = produtos.map((p) => semAcento([p.nome, p.descricao, (p.beneficios || []).join(" "), nomeCategoria(p.categoria)].join(" ")));
+  const campoBusca = document.querySelector(".busca-campo");
+  let categoriaAtual = "todos";
+  let termos = [];
+
   function aplicarFiltro(categoria) {
+    categoriaAtual = categoria;
     filtros.forEach((chip) => {
       const ativo = chip.dataset.filtro === categoria;
       chip.classList.toggle("ativo", ativo);
@@ -146,17 +154,41 @@ function paginaCatalogo(produtos, categorias) {
     });
 
     let visiveis = 0;
-    cartoes.forEach((cartao) => {
-      const mostrar = categoria === "todos" || cartao.dataset.categoria === categoria;
+    cartoes.forEach((cartao, i) => {
+      const mostrar = (categoria === "todos" || cartao.dataset.categoria === categoria)
+        && termos.every((t) => textos[i].includes(t));
       cartao.hidden = !mostrar;
       if (mostrar) visiveis++;
     });
-    if (aviso) aviso.hidden = visiveis > 0;
+    if (aviso) {
+      aviso.hidden = visiveis > 0;
+      aviso.textContent = termos.length
+        ? "Não encontramos produtos para essa busca. Tente outra palavra ou veja todas as categorias."
+        : "Ainda não há produtos nesta categoria.";
+    }
   }
 
-  // Categoria que veio no link (produtos.html?categoria=chas)
-  const inicial = new URLSearchParams(window.location.search).get("categoria") || "todos";
-  aplicarFiltro(inicial);
+  // Busca: filtra enquanto digita (todas as palavras precisam aparecer)
+  function aplicarBusca(texto) {
+    termos = semAcento(texto).split(/\s+/).filter(Boolean);
+    aplicarFiltro(categoriaAtual);
+  }
+  if (campoBusca) {
+    campoBusca.addEventListener("input", () => aplicarBusca(campoBusca.value));
+    campoBusca.closest("form").addEventListener("submit", (evento) => {
+      evento.preventDefault();
+      aplicarBusca(campoBusca.value);
+      campoBusca.blur();
+    });
+  }
+
+  // Categoria e busca que vieram no link (produtos.html?categoria=chas&busca=camomila)
+  const parametros = new URLSearchParams(window.location.search);
+  if (campoBusca && parametros.get("busca")) {
+    campoBusca.value = parametros.get("busca").slice(0, 60);
+    termos = semAcento(campoBusca.value).split(/\s+/).filter(Boolean);
+  }
+  aplicarFiltro(parametros.get("categoria") || "todos");
 
   filtros.forEach((chip) => {
     chip.addEventListener("click", (evento) => {
