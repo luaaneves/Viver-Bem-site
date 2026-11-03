@@ -539,3 +539,34 @@ p { margin: 0; }
   font: inherit; color: var(--texto); background: var(--branco);
 }
 .campo-nome input:focus { outline: 3px solid var(--verde-claro); border-color: var(--verde-escuro); }
+
+/* Botão voltar */
+.voltar {
+  display: inline-flex; align-items: center; gap: 4px;
+  min-height: 44px; padding-right: var(--e2);
+  font-weight: 700; font-size: 15px; color: var(--verde-escuro);
+}
+.voltar:hover span { text-decoration: underline; }
+.voltar:focus-visible { outline: 3px solid var(--verde-claro); outline-offset: 2px; border-radius: 8px; }
+.barra-voltar { padding-top: var(--e2); }
+.barra-voltar + .caminho { padding-top: 0; }
+
+/* Foto da fachada na Home */
+.foto-hero {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 3;
+  object-fit: cover; object-position: 50% 22%;
+  border-radius: var(--raio);
+}
+@media (min-width: 1024px) {
+  .foto-hero { aspect-ratio: 4 / 5; max-height: 580px; object-position: 50% 30%; }
+}
+
+/* Contato */
+.lista-contato li { margin-bottom: var(--e1); }
+.lista-contato a { color: var(--verde-escuro); font-weight: 700; text-decoration: underline; }
+.horarios { display: block; color: var(--texto-suave); }
+.botoes-contato { display: flex; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e3); }
+.btn-contorno { background: none; color: var(--verde-escuro); border: 2px solid var(--verde-escuro); line-height: 48px; }
+.mapa { border-radius: var(--raio); overflow: hidden; min-height: 280px; background: var(--areia); }
+.mapa iframe { display: block; width: 100%; height: 100%; min-height: 300px; border: 0; }
+@media (min-width: 1024px) { .mapa iframe { min-height: 380px; } }

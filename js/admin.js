@@ -626,4 +626,40 @@ $("#form-produto").addEventListener("submit", async (e) => {
   window.scrollTo({ top: 0 });
 });
 
+/* ---------- Voltar para a lista ---------- */
+
+// Volta para a lista da aba em que a pessoa estava (Produtos, Categorias ou Pedidos)
+function voltarParaLista() {
+  aviso("");
+  mostrar(abaAtual === "categorias" ? "#admin-categorias" : abaAtual === "pedidos" ? "#admin-pedidos" : "#admin-lista");
+  window.scrollTo({ top: 0 });
+}
+document.querySelectorAll("[data-voltar-lista]").forEach((b) => b.addEventListener("click", voltarParaLista));
+
+// Clicar na logo dentro do painel volta para a lista (e não para o site). O site abre em "Ver o site".
+document.querySelector(".logo-link").addEventListener("click", (evento) => {
+  if (!banco || usuarioAtual === null) return;
+  evento.preventDefault();
+  voltarParaLista();
+});
+
+/* ---------- Navegação ---------- */
+
+// Clicar no logo ou no título "Painel da loja" volta para o início do painel (lista de produtos)
+function irParaInicio(evento) {
+  evento.preventDefault();
+  if (!banco || $("#admin-login").hidden === false || !usuarioAtual) return;
+  abaAtual = "produtos";
+  aviso("");
+  mostrar("#admin-lista");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+$("#titulo-painel").addEventListener("click", irParaInicio);
+$("#logo-painel").addEventListener("click", irParaInicio);
+
+// Botões "Voltar" no topo dos formulários fazem o mesmo que o botão Cancelar/Voltar lá de baixo
+document.querySelectorAll("[data-voltar-para]").forEach((botao) => {
+  botao.addEventListener("click", () => $(botao.dataset.voltarPara).click());
+});
+
 iniciar().catch((erro) => aviso("Erro ao iniciar o painel: " + (erro.message || erro)));

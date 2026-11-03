@@ -25,3 +25,15 @@ if (botaoMenu && menu) {
 // 2. Ano do rodapé sempre atualizado
 const ano = document.querySelector("#ano");
 if (ano) ano.textContent = new Date().getFullYear();
+
+// 3. Botão "Voltar": volta para a página anterior do próprio site;
+//    se a pessoa chegou direto (link, Instagram...), vai para o endereço de reserva do link.
+document.querySelectorAll("[data-voltar]").forEach((link) => {
+  link.addEventListener("click", (evento) => {
+    const veioDoSite = document.referrer && new URL(document.referrer).origin === window.location.origin;
+    if (veioDoSite && window.history.length > 1) {
+      evento.preventDefault();
+      window.history.back();
+    }
+  });
+});
