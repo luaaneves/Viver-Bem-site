@@ -337,10 +337,21 @@ function paginaProduto(produtos) {
   const mesmaCategoria = outros.filter((p) => p.categoria === produto.categoria);
   const demais = outros.filter((p) => p.categoria !== produto.categoria);
   const relacionados = document.querySelector("#lista-relacionados");
-  mesmaCategoria
-    .concat(demais)
+  // Sorteia 4 da mesma categoria a cada visita; se faltar, completa sorteando de outras categorias
+  sortear(mesmaCategoria)
+    .concat(sortear(demais))
     .slice(0, 4)
     .forEach((p) => relacionados.append(criarCard(p)));
+}
+
+// Embaralha uma cópia da lista (Fisher-Yates)
+function sortear(lista) {
+  const copia = lista.slice();
+  for (let i = copia.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copia[i], copia[j]] = [copia[j], copia[i]];
+  }
+  return copia;
 }
 
 /* ---------- Página do carrinho ---------- */
