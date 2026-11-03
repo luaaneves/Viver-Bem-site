@@ -16,6 +16,9 @@ insert into public.categorias (slug, nome, ordem) values
   ('cosmeticos',  'Cosméticos',  3)
 on conflict (slug) do nothing;
 
+-- (foto da categoria: aparece no cartão da Home)
+alter table public.categorias add column if not exists imagem text;
+
 -- 1) Tabela de produtos (cada coluna = um campo do antigo produtos.json)
 create table if not exists public.produtos (
   id                 text primary key,            -- ex.: "cha-camomila" (vira o ?id= do link)

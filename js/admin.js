@@ -9,6 +9,7 @@ let banco = null;
 let produtos = [];
 let categorias = [];
 let editandoCategoria = null; // null = categoria nova
+let fotoCategoria = null;     // endereço da foto da categoria em edição (null = sem foto)
 let editandoId = null;   // null = produto novo
 let fotos = [];          // endereços das fotos do produto no formulário
 
@@ -320,9 +321,37 @@ function abrirFormularioCategoria(c) {
   $("#c-nome").value = c ? c.nome : "";
   $("#c-ordem").value = c ? c.ordem : categorias.length;
   $("#c-ativa").checked = c ? c.ativa : true;
+  fotoCategoria = c && c.imagem ? c.imagem : null;
+  desenharFotoCategoria();
   mostrar("#admin-form-categoria");
   window.scrollTo({ top: 0 });
 }
+function desenharFotoCategoria() {
+  const previa = $("#c-foto-previa");
+  previa.hidden = !fotoCategoria;
+  if (fotoCategoria) previa.src = fotoCategoria; else previa.removeAttribute("src");
+  $("#c-foto-remover").hidden = !fotoCategoria;
+  $("#c-foto-botao").firstChild.textContent = fotoCategoria ? "Trocar foto" : "Escolher foto";
+}
+$("#c-foto-remover").addEventListener("click", () => { fotoCategoria = null; desenharFotoCategoria(); });
+$("#c-foto").addEventListener("change", async (e) => {
+  const arquivo = e.target.files[0];
+  e.target.value = "";
+  if (!arquivo) return;
+  aviso("Enviando foto...", false);
+  try {
+    const blob = await reduzirFoto(arquivo);
+    const base = editandoCategoria || criarId($("#c-nome").value) || "categoria";
+    const caminho = "categorias/" + base + "-" + Date.now() + ".jpg";
+    const { error } = await banco.storage.from(BUCKET).upload(caminho, blob, { contentType: "image/jpeg", cacheControl: "31536000" });
+    if (error) throw error;
+    fotoCategoria = banco.storage.from(BUCKET).getPublicUrl(caminho).data.publicUrl;
+    desenharFotoCategoria();
+    aviso("Foto enviada. Lembre de clicar em Salvar.", false);
+  } catch (erro) {
+    aviso("Erro ao enviar foto: " + (erro.message || erro));
+  }
+});
 $("#botao-nova-categoria").addEventListener("click", () => abrirFormularioCategoria(null));
 $("#botao-cancelar-categoria").addEventListener("click", () => { aviso(""); mostrar("#admin-categorias"); });
 
@@ -334,14 +363,16 @@ $("#form-categoria").addEventListener("submit", async (e) => {
   const nome = $("#c-nome").value.trim();
   const slug = editandoCategoria || criarId(nome);
   if (!slug) { aviso("Dê um nome à categoria."); botao.disabled = false; return; }
-  const linha = { slug, nome, ordem: parseInt($("#c-ordem").value, 10) || 0, ativa: $("#c-ativa").checked };
+  const linha = { slug, nome, ordem: parseInt($("#c-ordem").value, 10) || 0, ativa: $("#c-ativa").checked, imagem: fotoCategoria };
   const consulta = editandoCategoria
     ? banco.from("categorias").update(linha).eq("slug", editandoCategoria)
     : banco.from("categorias").insert(linha);
   const { error } = await consulta;
   botao.disabled = false;
   if (error) {
-    aviso(error.code === "23505" ? "Já existe uma categoria com esse nome." : "Não consegui salvar: " + error.message);
+    aviso(error.code === "23505" ? "Já existe uma categoria com esse nome."
+      : /imagem/.test(error.message) ? "Falta rodar no Supabase o SQL da foto da categoria (arquivo supabase/categoria-foto.sql)."
+      : "Não consegui salvar: " + error.message);
     return;
   }
   abaAtual = "categorias";

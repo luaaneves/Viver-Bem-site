@@ -67,9 +67,17 @@ function paginaHome(produtos, categorias) {
     categorias.forEach((c) => {
       const cartao = criar("a", "categoria");
       cartao.href = "produtos.html?categoria=" + encodeURIComponent(c.slug);
-      const foto = criar("div", "ph", "[foto]");
-      foto.setAttribute("role", "img");
-      foto.setAttribute("aria-label", "Foto de " + c.nome);
+      let foto;
+      if (c.imagem) {
+        foto = criar("img", "foto-categoria");
+        foto.src = c.imagem;
+        foto.alt = "Foto de " + c.nome;
+        foto.loading = "lazy";
+      } else {
+        foto = criar("div", "ph", "[foto]");
+        foto.setAttribute("role", "img");
+        foto.setAttribute("aria-label", "Foto de " + c.nome);
+      }
       cartao.append(foto, criar("h3", null, c.nome), criar("span", "link-suave", "Ver produtos"));
       cats.append(cartao);
     });

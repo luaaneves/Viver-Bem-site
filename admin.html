@@ -135,6 +135,17 @@
         <label>Ordem na lista (menor aparece primeiro)
           <input type="number" id="c-ordem" step="1" value="0">
         </label>
+        <fieldset class="fotos">
+          <legend>Foto da categoria</legend>
+          <p class="nota">Aparece no cartão da categoria na Home. A foto é reduzida automaticamente.</p>
+          <img id="c-foto-previa" class="foto-categoria-previa" alt="Foto da categoria" hidden>
+          <div class="admin-barra">
+            <label class="btn-mini btn-arquivo" id="c-foto-botao">Escolher foto
+              <input type="file" id="c-foto" accept="image/*" hidden>
+            </label>
+            <button type="button" class="btn-mini perigo" id="c-foto-remover" hidden>Remover foto</button>
+          </div>
+        </fieldset>
         <label class="check"><input type="checkbox" id="c-ativa" checked> Ativa (aparece no site)</label>
         <div class="admin-barra">
           <button type="submit" class="btn btn-verde" id="botao-salvar-categoria">Salvar</button>

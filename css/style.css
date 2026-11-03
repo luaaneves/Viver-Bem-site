@@ -584,3 +584,7 @@ p { margin: 0; }
 @media (min-width: 1024px) {
   .foto-sobre { aspect-ratio: 4 / 5; max-height: 520px; }
 }
+
+/* Foto da categoria (cartões da Home) */
+.foto-categoria { width: 100%; height: 120px; object-fit: cover; border-radius: var(--raio); display: block; }
+@media (min-width: 1024px) { .foto-categoria { height: 240px; } }

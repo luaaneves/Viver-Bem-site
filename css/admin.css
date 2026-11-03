@@ -82,3 +82,6 @@ button.voltar-botao { background: none; border: 0; font-family: inherit; cursor:
 .voltar-botao { background: none; border: 0; padding-left: 0; font-family: inherit; cursor: pointer; margin-bottom: var(--e1); }
 .admin-topo .btn-mini { white-space: nowrap; }
 @media (max-width: 599px) { .admin-usuario { display: none; } }
+
+/* Foto da categoria no formulário */
+.foto-categoria-previa { width: 100%; max-width: 280px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; display: block; margin-bottom: 12px; }
