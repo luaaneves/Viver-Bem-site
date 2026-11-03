@@ -503,7 +503,8 @@ p { margin: 0; }
   padding-bottom: var(--e1);
 }
 .carrossel-trilho::-webkit-scrollbar { display: none; }
-.carrossel-trilho > .card-produto {
+.carrossel-trilho > .card-produto,
+.carrossel-trilho > .categoria {
   flex: 0 0 calc((100% - var(--e2)) / 2);
   scroll-snap-align: start;
 }
@@ -526,12 +527,18 @@ p { margin: 0; }
 .carrossel.sem-rolagem .carrossel-seta { display: none !important; }
 @media (min-width: 768px) {
   .carrossel-seta { display: grid; }
-  .carrossel-trilho > .card-produto { flex-basis: calc((100% - 2 * var(--e2)) / 3); }
+  .carrossel-trilho > .card-produto,
+  .carrossel-trilho > .categoria { flex-basis: calc((100% - 2 * var(--e2)) / 3); }
 }
 @media (min-width: 1024px) {
-  .carrossel-trilho > .card-produto { flex-basis: calc((100% - 3 * var(--e3)) / 4); }
+  .carrossel-trilho > .card-produto,
+  .carrossel-trilho > .categoria { flex-basis: calc((100% - 3 * var(--e3)) / 4); }
   .carrossel-trilho { gap: var(--e3); }
 }
+
+/* setas do carrossel de categorias ficam no meio da foto */
+.carrossel-categorias .carrossel-seta { top: 60px; }
+@media (min-width: 1024px) { .carrossel-categorias .carrossel-seta { top: 120px; } }
 
 .campo-nome { display: grid; gap: 6px; font-weight: 500; }
 .campo-nome input {

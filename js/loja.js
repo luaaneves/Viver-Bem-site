@@ -81,6 +81,7 @@ function paginaHome(produtos, categorias) {
       cartao.append(foto, criar("h3", null, c.nome), criar("span", "link-suave", "Ver produtos"));
       cats.append(cartao);
     });
+    iniciarCarrossel(cats, "#categorias-anterior", "#categorias-proximo", ".categoria");
   }
   const lista = document.querySelector("#lista-destaques");
   if (!lista) return;
@@ -88,13 +89,13 @@ function paginaHome(produtos, categorias) {
     .filter((p) => p.destaque && p.disponivel)
     .slice(0, 12)
     .forEach((p) => lista.append(criarCard(p)));
-  iniciarCarrossel(lista);
+  iniciarCarrossel(lista, "#destaques-anterior", "#destaques-proximo", ".card-produto");
 }
 
 // Carrossel dos destaques: arrastar/rolar de lado + setas
-function iniciarCarrossel(trilho) {
-  const anterior = document.querySelector("#destaques-anterior");
-  const proximo = document.querySelector("#destaques-proximo");
+function iniciarCarrossel(trilho, seletorAnterior, seletorProximo, seletorCartao) {
+  const anterior = document.querySelector(seletorAnterior);
+  const proximo = document.querySelector(seletorProximo);
   const carrossel = trilho.closest(".carrossel");
 
   function atualizar() {
@@ -104,7 +105,7 @@ function iniciarCarrossel(trilho) {
     proximo.disabled = trilho.scrollLeft >= sobra - 2;
   }
   function rolar(direcao) {
-    const cartao = trilho.querySelector(".card-produto");
+    const cartao = trilho.querySelector(seletorCartao);
     const passo = cartao ? cartao.getBoundingClientRect().width + 16 : trilho.clientWidth;
     trilho.scrollBy({ left: direcao * passo * (window.innerWidth >= 768 ? 2 : 1), behavior: "smooth" });
   }

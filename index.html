@@ -68,8 +68,16 @@
     <section class="secao">
       <div class="container">
         <h2>Compre por categoria</h2>
-        <div class="grid grid-categorias" id="lista-categorias">
-          <!-- Os cartões das categorias entram aqui sozinhos (Supabase ou data/categorias.json) -->
+        <div class="carrossel carrossel-categorias">
+          <button type="button" class="carrossel-seta anterior" id="categorias-anterior" aria-label="Ver categorias anteriores" disabled>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 4l-6 6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="carrossel-trilho" id="lista-categorias" role="region" aria-label="Categorias">
+            <!-- Os cartões das categorias entram aqui sozinhos (Supabase ou data/categorias.json) -->
+          </div>
+          <button type="button" class="carrossel-seta proximo" id="categorias-proximo" aria-label="Ver mais categorias">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
       </div>
     </section>
